@@ -1,7 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
-
+interface iData {
+  token?: string;
+  refresh?: string;
+  user?: {};
+}
 const initialState = {
-  user: {},
+  user: {} as iData,
 };
 
 const GlobalState = createSlice({
@@ -11,9 +15,12 @@ const GlobalState = createSlice({
     addUser: (state, { payload }) => {
       state.user = payload;
     },
+    updateToken: (state, { payload }) => {
+      state.user.token = payload;
+    },
   },
 });
 
-export const { addUser } = GlobalState.actions;
+export const { addUser, updateToken } = GlobalState.actions;
 
 export default GlobalState.reducer;

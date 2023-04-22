@@ -1,15 +1,46 @@
 import styled from "styled-components";
-import React from "react";
+import React, { useState } from "react";
+import { signin } from "../utils/APIs";
+import axios from "axios";
+import { useDispatch } from "react-redux";
+import { addUser } from "../Global/GlobalState";
+const url: string = "http://localhost:3355/api/user";
 
 const SignIn = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const dispatch = useDispatch();
   return (
     <Container>
       <Main>
         <Card>
-          <Input placeholder="email" />
-          <Input placeholder="password" />
+          <Input
+            placeholder="email"
+            value={email}
+            onChange={(e: any) => {
+              setEmail(e.target.value);
+            }}
+          />
+          <Input
+            placeholder="password"
+            value={password}
+            onChange={(e: any) => {
+              setPassword(e.target.value);
+            }}
+          />
 
-          <Button bg="start">Sign</Button>
+          <Button
+            bg="start"
+            onClick={async () => {
+              console.log("Data", email, password);
+              signin({ email, password }).then((res) => {
+                console.log(res?.data.data);
+                dispatch(addUser(res?.data.data));
+              });
+            }}
+          >
+            Sign
+          </Button>
         </Card>
       </Main>
     </Container>
