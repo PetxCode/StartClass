@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import earth from "../asset/earth.svg";
+import earth1 from "../asset/internal.svg";
+import earth2 from "../asset/ee.png";
 import styled from "styled-components";
 const Earth = () => {
   const [img, setImg] = useState<boolean>(true);
@@ -28,7 +30,13 @@ const Earth = () => {
     <Container>
       <Main>
         <Top>
-          <Image src={earth} />
+          {img ? (
+            <Image src={earth} />
+          ) : img1 ? (
+            <Image src={earth1} />
+          ) : img2 ? (
+            <Image src={earth2} />
+          ) : null}
           <Content>
             <Title>Earth</Title>
 
@@ -71,20 +79,20 @@ const Earth = () => {
         </Top>
         <Bottom>
           <Card>
-            <Text>Text</Text>
-            <BigText>BigText</BigText>
+            <Text>ROTATION TIME</Text>
+            <BigText>0.99 DAYS</BigText>
           </Card>
           <Card>
-            <Text>Text</Text>
-            <BigText>BigText</BigText>
+            <Text>REVOLUTION TIME</Text>
+            <BigText>365.26 DAYS</BigText>
           </Card>
           <Card>
-            <Text>Text</Text>
-            <BigText>BigText</BigText>
+            <Text>RADIUS</Text>
+            <BigText>6,371 KM</BigText>
           </Card>
           <Card>
-            <Text>Text</Text>
-            <BigText>BigText</BigText>
+            <Text>AVERAGE TEMP.</Text>
+            <BigText>16°C</BigText>
           </Card>
         </Bottom>
       </Main>
@@ -121,6 +129,7 @@ const Body = styled.div`
   font-size: 12px;
   line-height: 1.5;
   margin-bottom: 50px;
+  /* min-height: 60px; */
 `;
 
 const Title = styled.div`
@@ -134,16 +143,19 @@ const BigText = styled.div`
   font-weight: 700;
 `;
 
-const Text = styled.div``;
+const Text = styled.div`
+  color: rgba(0, 0, 0, 0.6);
+  font-size: 12px;
+  margin: 5px 0 20px 0;
+`;
 
 const Card = styled.div`
   width: 190px;
   border: 1px solid silver;
   height: 100px;
   display: flex;
-  justify-content: center;
   flex-direction: column;
-  padding-left: 20px;
+  padding-left: 10px;
   margin: 0 10px;
 `;
 
@@ -171,7 +183,7 @@ const Top = styled.div`
 `;
 
 const Main = styled.div`
-  width: 1000px;
+  width: 700px;
   min-height: 600px;
   margin-top: 50px;
   display: flex;

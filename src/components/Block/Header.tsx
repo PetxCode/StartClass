@@ -10,6 +10,8 @@ const Header = () => {
           <Logo to="/">CodeLab</Logo>
 
           <LinkHolder>
+            <Holder to="/sign">Signed</Holder>
+            <Holder to="/user">All Users</Holder>
             <Holder to="/earth">Earth</Holder>
           </LinkHolder>
         </Main>
