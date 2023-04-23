@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { useState } from "react";
 import { getProduct } from "../utils/APIs";
 import { useFetchUser } from "../hooks/useFetchUsers";
 
