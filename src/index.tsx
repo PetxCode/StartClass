@@ -8,6 +8,10 @@ import { persistStore } from "redux-persist";
 import { PersistGate } from "redux-persist/integration/react";
 import { store } from "./Global/store";
 import { Provider } from "react-redux";
+import ErrorHandler from "./utils/ErrorBoundary";
+import { Suspense } from "react";
+import LoadingState from "./components/LoadingState";
+import { ErrorBoundary } from "react-error-boundary";
 
 let persistor = persistStore(store);
 
@@ -16,11 +20,15 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <React.StrictMode>
-    <Provider store={store}>
-      <PersistGate loading={null} persistor={persistor}>
-        <RouterProvider router={mainRoute} />
-      </PersistGate>
-    </Provider>
+    <Suspense fallback={<LoadingState />}>
+      <ErrorBoundary FallbackComponent={ErrorHandler}>
+        <Provider store={store}>
+          <PersistGate loading={null} persistor={persistor}>
+            <RouterProvider router={mainRoute} />
+          </PersistGate>
+        </Provider>
+      </ErrorBoundary>
+    </Suspense>
     ,
   </React.StrictMode>,
 );

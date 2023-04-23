@@ -1,16 +1,18 @@
 import styled from "styled-components";
-import { getUser } from "../utils/APIs";
+import { useState } from "react";
+import { getProduct } from "../utils/APIs";
 import { useFetchUser } from "../hooks/useFetchUsers";
 
-const GetUsers = () => {
-  const allUsers = useFetchUser(getUser);
+const ViewProducts = () => {
+  const allUsers = useFetchUser(getProduct);
 
   return (
     <Container>
       <Main>
         {allUsers?.map((props: any) => (
           <div key={props?.id}>
-            <div>{props.email}</div>
+            <div>{props.title}</div>
+            <div>₦{props.price}</div>
           </div>
         ))}
       </Main>
@@ -18,7 +20,7 @@ const GetUsers = () => {
   );
 };
 
-export default GetUsers;
+export default ViewProducts;
 
 const Main = styled.div``;
 

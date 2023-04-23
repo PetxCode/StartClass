@@ -1,16 +1,15 @@
 import styled from "styled-components";
-import React, { useState } from "react";
-import { signin } from "../utils/APIs";
+import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { addUser } from "../Global/GlobalState";
+import { useDispatch } from "react-redux";
+import { registerUser } from "../utils/APIs";
+import { createUser } from "../Global/GlobalState";
 
-const SignIn = () => {
-  const navigate = useNavigate();
+const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
   const dispatch = useDispatch();
-
   return (
     <Container>
       <Main>
@@ -32,30 +31,29 @@ const SignIn = () => {
 
           <Button
             bg="start"
-            onClick={async () => {
-              console.log("Data", email, password);
-              signin({ email, password }).then((res) => {
-                console.log(res?.data.data);
-                dispatch(addUser(res?.data.data));
+            onClick={() => {
+              console.log("reading Registered data: ");
+
+              registerUser({ email, password }).then((res) => {
+                console.log("reading Registered data: ", res?.data.data);
+
+                dispatch(createUser(res?.data.data));
+                navigate("/verified");
               });
-              const timer = setTimeout(() => {
-                navigate("/user");
-                clearTimeout(timer);
-              }, 1000);
             }}
           >
-            Sign
+            Register
           </Button>
         </Card>
         <div>
-          Don't have an Account <Span to="/register">Create One</Span>
+          Already have an Account <Span to="/sign">Sign in</Span>
         </div>
       </Main>
     </Container>
   );
 };
 
-export default SignIn;
+export default Register;
 const Span = styled(Link)`
   text-decoration: none;
   color: #000269;
@@ -96,8 +94,6 @@ const Card = styled.div`
   display: flex;
   flex-direction: column;
 `;
-
-
 
 const Main = styled.div``;
 

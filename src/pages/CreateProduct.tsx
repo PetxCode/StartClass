@@ -1,66 +1,54 @@
 import styled from "styled-components";
 import React, { useState } from "react";
-import { signin } from "../utils/APIs";
-import { useNavigate, Link } from "react-router-dom";
+import { createProduct, signin } from "../utils/APIs";
 import { useDispatch, useSelector } from "react-redux";
 import { addUser } from "../Global/GlobalState";
+import { usePost } from "../hooks/usePost";
 
-const SignIn = () => {
-  const navigate = useNavigate();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+const CreateProduct = () => {
+  const [title, setTitle] = useState<string>("");
+  const [price, setPrice] = useState<number>(0);
   const dispatch = useDispatch();
+  const token = useSelector((state: any) => state.user);
 
   return (
     <Container>
       <Main>
         <Card>
           <Input
-            placeholder="email"
-            value={email}
+            placeholder="title"
+            value={title}
             onChange={(e: any) => {
-              setEmail(e.target.value);
+              setTitle(e.target.value);
             }}
           />
           <Input
-            placeholder="password"
-            value={password}
+            placeholder="price"
+            value={price}
             onChange={(e: any) => {
-              setPassword(e.target.value);
+              setPrice(e.target.value);
             }}
           />
 
           <Button
             bg="start"
             onClick={async () => {
-              console.log("Data", email, password);
-              signin({ email, password }).then((res) => {
+              createProduct(token?.token, { title, price }).then((res) => {
                 console.log(res?.data.data);
-                dispatch(addUser(res?.data.data));
+                setPrice(0);
+                setTitle("");
               });
-              const timer = setTimeout(() => {
-                navigate("/user");
-                clearTimeout(timer);
-              }, 1000);
             }}
           >
-            Sign
+            Create Product
           </Button>
         </Card>
-        <div>
-          Don't have an Account <Span to="/register">Create One</Span>
-        </div>
       </Main>
     </Container>
   );
 };
 
-export default SignIn;
-const Span = styled(Link)`
-  text-decoration: none;
-  color: #000269;
-  cursor: pointer;
-`;
+export default CreateProduct;
 
 const Button = styled.div<{ bg: string }>`
   width: 300px;
@@ -96,8 +84,6 @@ const Card = styled.div`
   display: flex;
   flex-direction: column;
 `;
-
-
 
 const Main = styled.div``;
 

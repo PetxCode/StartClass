@@ -1,8 +1,12 @@
-import React from "react";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { logOutUser } from "../../Global/GlobalState";
 
 const Header = () => {
+  const dispatch = useDispatch();
+  const user = useSelector((state: any) => state.user);
+  const navigate = useNavigate();
   return (
     <div>
       <Container>
@@ -10,9 +14,28 @@ const Header = () => {
           <Logo to="/">CodeLab</Logo>
 
           <LinkHolder>
-            <Holder to="/sign">Signed</Holder>
             <Holder to="/user">All Users</Holder>
             <Holder to="/earth">Earth</Holder>
+
+            {user ? (
+              <div>
+                <Holder to="/view-product">View Products</Holder>
+                <Holder to="/create-product">Create Product</Holder>
+              </div>
+            ) : null}
+
+            {user ? (
+              <HolderLogger
+                onClick={() => {
+                  dispatch(logOutUser());
+                  navigate("/");
+                }}
+              >
+                LogOut
+              </HolderLogger>
+            ) : (
+              <Holder to="/sign">Signed</Holder>
+            )}
           </LinkHolder>
         </Main>
       </Container>
@@ -22,12 +45,22 @@ const Header = () => {
 
 export default Header;
 
+const HolderLogger = styled.div`
+  padding: 0 10px;
+  font-weight: 700;
+  text-decoration: none;
+  color: black;
+  text-transform: uppercase;
+  cursor: pointer;
+`;
+
 const Holder = styled(Link)`
   padding: 0 10px;
   font-weight: 700;
   text-decoration: none;
   color: black;
   text-transform: uppercase;
+  cursor: pointer;
 `;
 
 const LinkHolder = styled.div`

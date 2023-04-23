@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import earth from "../asset/earth.svg";
 import earth1 from "../asset/internal.svg";
 import earth2 from "../asset/ee.png";
 import styled from "styled-components";
+
 const Earth = () => {
   const [img, setImg] = useState<boolean>(true);
   const [img1, setImg1] = useState<boolean>(false);
