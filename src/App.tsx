@@ -3,7 +3,9 @@ import styled from "styled-components";
 import { AiFillPlayCircle } from "react-icons/ai";
 import { MdFavoriteBorder, MdFavorite } from "react-icons/md";
 import { AiOutlineClose } from "react-icons/ai";
-import vid from "./Demo.mp4";
+import vid from "./asset/Demo.mp4"
+import vid1 from "./asset/dd.mp4"
+import vid2 from "./asset/ee.mp4"
 import { useSelector } from "react-redux";
 
 const Start = () => {
@@ -14,9 +16,9 @@ const Start = () => {
   const [showVideo, setShowVideo] = useState<boolean>(false);
 
   const [myVideo, setMyVideo] = useState([
-    { title: "title1", detail: "details1", video: "video1", bg: "red" },
-    { title: "title1", detail: "details1", video: "video1", bg: "green" },
-    { title: "title1", detail: "details1", video: "video1", bg: "#000269" },
+    { title: "title1", detail: "details1", video: vid, bg: "red" },
+    { title: "title2", detail: "details2", video: vid1, bg: "green" },
+    { title: "title3", detail: "details3", video: vid2, bg: "#000269" },
   ]);
 
   const onToggled = () => {
@@ -33,7 +35,7 @@ const Start = () => {
         <Text>CodeLab</Text>
 
         {myVideo.map((props) => (
-          <Holder>
+          <Holder key={props.title} >
             <VideoClip bg={props.bg}>
               <div onClick={onShowVideo}>
                 <AiFillPlayCircle size={38} />
@@ -58,12 +60,18 @@ const Start = () => {
         ))}
 
         {showVideo ? (
-          <Div2>
+          <div>
+            {
+              myVideo?.map((props: any, i:number) => (
+                <Div2 key={i} >
             <BackDrop onClick={onShowVideo}>
               <Icon size={30} onClick={onShowVideo} />
             </BackDrop>
-            <Video src={vid} controls autoPlay playsInline />
+            <Video src={props.video} controls autoPlay playsInline />
           </Div2>
+              ))
+            }
+          </div>
         ) : null}
       </Main>
     </Container>
